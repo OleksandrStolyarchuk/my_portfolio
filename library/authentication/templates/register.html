@@ -1,0 +1,29 @@
+{% extends 'base.html' %}
+
+{% block title %}
+    <title>Sign Up</title>
+{% endblock %}
+
+{% block content %}
+
+{% if not created %}
+<div style="margin-top:30px;">
+    <form action="." method="POST" >
+          {% csrf_token %}
+          {{ form.as_p }}
+          <input type="submit" value="Create User">
+    </form>
+</div>
+
+{% else %}
+
+    <p>Hello <a href="{% url 'login' %}">{{object.first_name}}</a>!
+        <br>Your account was created successful!</p>
+
+{% endif %}
+
+<div>
+    <a href="{% url 'home' %}">Back to Home Page</a>
+</div>
+
+{% endblock content %}

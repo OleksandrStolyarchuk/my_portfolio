@@ -1,0 +1,46 @@
+{% extends 'base.html' %}
+
+{% block title %}
+    <title>All Authors</title>
+{% endblock %}
+
+{% block content %}
+
+{% if authors %}
+    <table class="table">
+        <thead>
+            <tr>
+                <td>ID</td>
+                <td>Name</td>
+                <td>Surname</td>
+                <td>Patronymic</td>
+                <td></td>
+            </tr>
+        </thead>
+        <tbody>
+            {% for author in authors %}
+                <tr>
+                    <td><a href='{% url "detail" author.id %}'>{{ author.id }}</a></td>
+                    <td>{{author.name}}</td>
+                    <td>{{author.surname}}</td>
+                    <td>{{author.patronymic}}</td>
+                    <td>
+                        <form action={% url "delete" author.id %} method="POST">
+                            {% csrf_token %}
+                            <input type="submit" value="Delete">
+                        </form>
+                    </td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+{% else %}
+    <p>There are no authors yet.</p>
+{% endif %}
+
+<div>
+    <a href="{% url 'create' %}">Add Author</a> |
+    <a href="{% url 'home' %}">Back to Home page</a>
+</div>
+
+{% endblock content %}

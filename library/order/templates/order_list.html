@@ -1,0 +1,83 @@
+{% extends 'base.html' %}
+
+{% block title %}
+    <title>All Orders</title>
+{% endblock %}
+
+{% block content %}
+
+{% if orders %}
+    {% if user.role == 1 %}
+        <table class="table">
+            <thead>
+                <tr>
+                    <td>ID</td>
+                    <td>User Name</td>
+                    <td>Book</td>
+                    <td>Created At</td>
+                    <td>Plated End At</td>
+                    <td>End At</td>
+                    <td>Close</td>
+                </tr>
+            </thead>
+            <tbody>
+                {% for order in orders %}
+                    <tr>
+                        <td><a href='{% url "detail_order" order.id %}'>{{ order.id }}</a></td>
+                        <td>{{ order.user.first_name }} {{ order.user.last_name }}</td>
+                        <td>{{ order.book.name }}</td>
+                        <td>{{ order.created_at }}</td>
+                        <td>{{ order.plated_end_at }}</td>
+                        {% if order.end_at %}
+                            <td>{{ order.end_at }}</td>
+                            <td>
+                                <form action="{% url 'close_order' order.id %}" method="POST">
+                                    {% csrf_token %}
+                                    <input type="submit" value="Close">
+                                </form>
+                            </td>
+                        {% else %}
+                            <td>
+                                <form action="{% url 'order_set_end_at' order.id %}" method="POST">
+                                    {% csrf_token %}
+                                    <input type="submit" value="Set">
+                                </form>
+                            </td>
+                            <td></td>
+                        {% endif %}
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    {% else %}
+        <table class="table">
+            <thead>
+                <tr>
+                    <td>ID</td>
+                    <td>Book</td>
+                    <td>Created At</td>
+                    <td>Plated End At</td>
+                </tr>
+            </thead>
+            <tbody>
+                {% for order in orders %}
+                    <tr>
+                        <td><a href="{% url 'detail_order' order.id %}">{{ order.id }}</a></td>
+                        <td>{{ order.book.name }}</td>
+                        <td>{{ order.created_at }}</td>
+                        <td>{{ order.plated_end_at }}</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    {% endif %}
+{% else %}
+    <p>There are no orders yet.</p>
+{% endif %}
+
+<div>
+    <a href="{% url 'home' %}">Back to Home page</a>
+</div>
+
+
+{% endblock content %}

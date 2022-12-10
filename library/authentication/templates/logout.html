@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+
+{% block title %}
+    <title>Log Out</title>
+{% endblock %}
+
+{% block content %}
+
+{% if request.user.is_authenticated %}
+    <div>
+        <form method="POST">
+            {% csrf_token %}
+            <p>You are sure you want to log out?</p>
+            <input type="submit" value="Log Out">
+        </form>
+    </div>
+{% else %}
+    <p>You are not logged in. Would you like to
+        <a href="{% url 'login' %}">login?</a>
+    </p>
+{% endif %}
+
+<div>
+    <a href="{% url 'home' %}">Back to Home Page</a>
+</div>
+
+{% endblock %}

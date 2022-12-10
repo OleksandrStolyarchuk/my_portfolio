@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+
+{% block title %}
+    <title>My Library</title>
+{% endblock %}
+
+
+
+{% block content %}
+<h2>All books in the library:</h2>
+{% if books %}
+    <table class="table">
+            <tr style="font-weight: bold;">
+                <td>ID</td>
+                <td>Name</td>
+                <td>Description</td>
+                <td>Count</td>
+                <td>Authors</td>
+            </tr>
+        <tbody>
+            {% for book in books %}
+                <tr>
+                    <td><a href='{% url "book_detail" book.id %}'>{{ book.id }}</a></td>
+                    <td>{{ book.name }}</td>
+                    <td>{{ book.description | truncatechars:120  }}</td>
+                    <td>{{ book.count }}</td>
+                    <td>{% for author in book.authors.all %}{{ author }}<br/>{% endfor %}</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+{% else %}
+    <p>There are no books yet.</p>
+{% endif %}
+
+{% endblock content %}

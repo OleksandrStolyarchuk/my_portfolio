@@ -1,0 +1,33 @@
+{% extends 'base.html' %}
+
+{% block title %}
+    <title>Oreder #{{ order.id }}</title>
+{% endblock %}
+
+{% block content %}
+<div>
+    <table class="table table-borderless">
+        <thead class="border-bottom font-weight-bolt">
+            <tr style="font-weight: bold;">
+                <td>User Name</td>
+                <td>Book</td>
+                <td>Created At</td>
+                <td>Plated End At</td>
+                <td>End At</td>
+            </tr>
+        </thead>
+        <tbody>
+                <tr>
+                    <td>{{ order.user.first_name }} {{ order.user.last_name }}</td>
+                    <td>{{ order.book.name }}</td>
+                    <td>{{ order.created_at }}</td>
+                    <td>{{ order.plated_end_at }}</td>
+                    <td>{{ order.end_at }}</td>
+                </tr>
+        </tbody>
+    </table>
+</div>
+
+<a href="{% url 'index_order' %}">Back to Orders list</a>
+
+{% endblock content %}

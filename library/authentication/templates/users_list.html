@@ -1,0 +1,38 @@
+{% extends 'base.html' %}
+
+{% block title %}
+    <title>All Users</title>
+{% endblock %}
+
+{% block content %}
+
+{% if users %}
+    <table class="table">
+            <tr style="font-weight: bold;">
+                <td>ID</td>
+                <td>First Name</td>
+                <td>Last Name</td>
+                <td>Email</td>
+                <td>Role</td>
+            </tr>
+        <tbody>
+            {% for user in users %}
+                <tr>
+                    <td><a href='{% url "user_detail" user.id %}'>{{ user.id }}</a></td>
+                    <td>{{user.first_name}}</td>
+                    <td>{{user.last_name}}</td>
+                    <td>{{user.email}}</td>
+                    <td>{{user.get_role_name}}</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+{% else %}
+    <p>There are no users yet.</p>
+{% endif %}
+
+<div>
+    <a href="{% url 'home' %}">Back to Home page</a>
+</div>
+
+{% endblock content %}
